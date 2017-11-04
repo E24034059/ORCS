@@ -1,0 +1,635 @@
+﻿.MLAS_span_function
+{
+    font-size: 80%;
+}
+.MLAS_span_title
+{
+    font-weight: bold;
+    font-size: 100%;
+    padding: 3px;
+}
+.MLAS_span_selected
+{
+    background-color: #aaccaa;
+}
+.MLAS_span_unselected
+{
+    background-color: Transparent;
+}
+.MLAS_span_reminder
+{
+    color: #ff0000; font-size: 100%;
+}
+.MLAS_span_text_blue
+{
+    color: #0000ff; font-size: 100%;
+}
+
+/*div,*/ .MLAS_div_click, .MLAS_div_click2,
+.MLAS_div_rating_item_footer, .MLAS_div_setup_title,.MLAS_div_setup_title1,
+.MLAS_div_window_style, .MLAS_div_window, .MLAS_div_move_item
+{
+    padding: 5px;
+    margin: 5px;
+}
+
+.MLAS_div_window_style2
+{
+	padding: 2px;
+    margin: 3px;
+    border: outset 1px #cccccc; 
+    background-color: #e8ffff;
+    text-align: center;
+}
+
+.MLAS_div_window_style3
+{
+	padding: 2px;
+    border: outset 2px #666666; 
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.MLAS_div_click, .MLAS_div_click_Item1, .MLAS_div_click_Item2, .MLAS_div_click2
+{ 
+    width: 98%;
+    border: solid 1px #cccccc;
+    text-decoration: none;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.MLAS_div_click2
+{
+	width: 100%;
+}
+
+.MLAS_div_Message
+{ 
+    width: 99%;
+    border: solid 2px #999999;
+    text-align: left;
+    vertical-align: middle;
+    padding: 0px;
+    margin-top: 4px;
+}
+
+.MLAS_div_RatingItem
+{
+    padding: 2px;
+    margin: 3px;
+    width: 98%;
+    border: solid 1px #cccccc;
+    text-decoration: none;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.MLAS_div_click_Item1
+{
+	cursor:  hand;
+	width: 98%;
+	text-align:center;
+	background-color: #e8ffff;
+	font-size: medium;
+}
+
+.MLAS_div_click_Item2
+{
+	cursor: hand;
+	width: 98%;
+	text-align:center;
+	background-color: #99ccff;
+	font-size: medium;
+}
+
+.MLAS_div_rating_item
+{
+    width: 100%;
+    /*border: solid 1px #cccccc;*/
+    text-decoration: none;
+    text-align: left;
+}
+.MLAS_div_rating_item_title
+{
+	padding: 2px;
+    background-color: #C6dfff; 
+    color: #000033; 
+    font-weight: bold;
+}
+
+.MLAS_div_rating_item_statistic, .MLAS_div_rating_item_statistic2
+{
+	padding: 2px;
+    background-color: #C6dfff;
+    text-align:center;
+    border-left: solid 1px #cccccc;
+    border-right: solid 1px #cccccc;
+}
+
+.MLAS_div_rating_item_statistic2
+{
+    background-color: #ffffff;
+}
+
+.MLAS_div_rating_item_answer
+{ 
+	padding: 2px;
+    color: #000000; 
+    width: 60%;
+}
+.MLAS_div_rating_item_footer
+{ 
+    width: 100%;
+    /*border: solid 1px #cccccc;
+    text-decoration: none;*/
+    text-align: center;
+}
+.MLAS_div_move_item
+{
+    width: 85%;
+    height: 400;
+}
+.MLAS_div_shadow
+{
+    width: 100%; 
+    height: 100%; 
+    z-index: 400; 
+    /*display: none; */
+    background-color: #999999; 
+    position: absolute; 
+    FILTER: ALPHA(opacity=40);
+}
+.MLAS_div_setup_title
+{
+    width: 99%;
+    background-color: #c8ebeb;
+}
+.MLAS_div_setup_title1
+{
+    width: 98%;
+    background-color: #c8ebeb;
+}
+.MLAS_div_setup_item
+{
+    padding-left: 20px;
+}
+.MLAS_div_setup_item_title
+{
+	margin: 0px;
+	padding: 0px;
+	text-align:right;
+	width: 150px;
+	float: left;
+	color: #4169e1;
+}
+.MLAS_div_setup_item_content
+{
+	margin: 0px;
+	padding: 0px;
+	padding-left: 10px;
+	text-align:left;
+	width: 100%;
+	vertical-align:top;
+}
+
+/* the following div style is for window-like div */
+.MLAS_div_window_title
+{
+    text-align: right; 
+    width: 100%;
+    background-color: #498aff;
+}
+.MLAS_div_window_title_LightColor
+{
+    text-align: right; 
+    width: 100%;
+    background-color: #99ccff;
+    margin-top:3px;
+}
+.MLAS_div_window_title_text
+{
+    text-align: left; color: #FFFFFF; 
+    font-weight: bold; padding-top: 3px; padding-left: 10px;
+}
+.MLAS_div_window_text
+{
+    text-align: left;
+    color: #FFFFFF; 
+    padding-top: 3px;
+}
+.MLAS_div_window_close
+{
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #ef4268; 
+    width: 22px; 
+    /*cursor: hand;*/ 
+    text-align: center;
+    font-family: Arial;
+    cursor: default;
+    border: solid 1px #ffffff;
+}
+.MLAS_div_window,.MLAS_div_move_item
+{
+    z-index: 500; 
+    position: absolute;
+}
+
+.MLAS_div_window_style, .MLAS_div_window, .MLAS_div_move_item
+{
+    border: outset 2px #cccccc; 
+    background-color: #e8ffff;
+}
+
+/* the upper div style is for window-like div */
+
+.MLAS_div_preview_panel
+{
+    border: solid 1px #7788cc;
+}
+
+.MLAS_div_CoueseList
+{
+	border: solid 1px #cccccc;
+	margin-top:5px;
+}
+
+.MLAS_div_SolidFrame
+{
+	border: solid 1px #808080;
+	margin-top:5px;
+}
+
+.MLAS_div_SolidFrame2
+{
+	border: solid 1px #808080;
+	padding: 4px;
+}
+
+.MLAS_div_ActivityItem
+{
+	border: solid 1px #808080;
+	text-align:left;
+	background-color: #99ccff;
+	padding: 1px;
+	margin: 5px;
+	width:250px;
+}
+
+.MLAS_div_ActivityHeaderP
+{
+	border: solid 1px #808080;
+	text-align:center;
+	background-color: #c8ebeb;
+	color: #000000;
+}
+
+.MLAS_div_Activity, .MLAS_div_Activity_FS, .MLAS_div_Activity_left
+{
+	border: solid 1px #808080;
+	text-align:center;
+	color: #696969;
+}
+
+.MLAS_div_Activity_FS
+{
+	font-size:smaller;
+}
+
+.MLAS_div_Activity_left
+{
+	text-align:left;
+}
+
+.MLAS_div_ActivityW, .MLAS_div_Activity_FSW, .MLAS_div_Activity_leftW
+{
+	border: solid 1px #808080;
+	text-align:center;
+	background-color:White;
+	color: #000000;
+}
+
+.MLAS_div_Activity_FSW
+{
+	font-size:smaller;
+}
+
+.MLAS_div_Activity_leftW
+{
+	text-align:left;
+}
+
+.MLAS_div_ActivityHeaderPanel, .MLAS_div_ActivityHeaderPanel_colored, .MLAS_div_ActivityHeaderPanel_unactive, .MLAS_div_ActivityHeaderPanel_Done
+{
+	margin-top: 7px;
+}
+
+.MLAS_div_ActivityHeaderPanel_Done
+{
+	background-color: #C6dfff;
+}
+
+.MLAS_div_ActivityHeaderPanel_colored
+{
+	background-color: #99ccff;
+}
+
+.MLAS_div_ActivityHeaderPanel_unactive
+{
+	background-color: #eeeeee;
+}
+
+.MLAS_div_smaller_text
+{
+	font-size:smaller;
+}
+
+.MLAS_lb_name_text, .MLAS_lb_name_text_active
+{
+    text-align: left;
+    border: solid 1px #808080; 
+    width: 200px;
+    background-color:White;
+    margin-left:5px;
+    margin-top:2px;
+    padding-left:5px
+}
+/*For user list*/
+.MLAS_lb_name_text1
+{
+    text-align: left;
+    border: solid 1px #808080; 
+    width: 160px;
+    background-color:#eaecec;
+    margin-left:5px;
+    margin-top:2px;
+    padding-left:5px
+}
+
+.MLAS_lb_name_text_active
+{
+	background-color: #99ccff;
+}
+
+.MLAS_lb_activity_text, .MLAS_lb_activity_text_active, .MLAS_lb_activity_text_current
+{
+    text-align: left;
+    border: solid 1px #808080; 
+    width: 190px;
+    background-color:White;
+    margin-left:1px;
+    margin-top:5px;
+    padding:3px;
+}
+
+.MLAS_lb_activity_text_active
+{
+	background-color: #99ccff;
+}
+
+.MLAS_lb_activity_text_current
+{
+	background-color: #ffd700;
+}
+
+.MLAS_tc_header
+{
+	background-color: #c8ebeb;
+	text-align:center;
+	border: solid 1px #808080;
+	font:22;/*2013/1/28 蕭凱 增加使字體加大*/
+	font-weight:bolder;
+}
+
+.MLAS_tc_header1
+{
+	font-weight:bolder;
+	background-color: #c8ebeb;
+	text-align:left;
+	border: solid 1px #808080;
+}
+
+.MLAS_tc_headerS
+{
+	font-weight:bolder;
+	font-size:smaller;
+	background-color: #c8ebeb;
+	text-align:center;
+	border: solid 1px #808080;
+}
+
+.MLAS_tc_content
+{
+	background-color: #ffffff;
+	text-align:center;
+	border: solid 1px #808080;
+	font:22;/*2013/1/28 蕭凱 增加使字體加大*/
+}
+
+.MLAS_tc_content1
+{
+	background-color: #ffffff;
+	text-align:left;
+	border: solid 1px #808080;
+}
+
+.MLAS_tc_content2
+{
+	background-color: #C6dfff;
+	text-align:center;
+	border: solid 1px #808080;
+	font:22;/*2013/1/28 蕭凱 增加使字體加大*/
+}
+
+.MLAS_tc_content3
+{
+	background-color: #cccccc;
+	text-align:center;
+	border: solid 1px #808080;
+}
+
+.MLAS_tc_content4
+{
+	background-color: #C6dfff;
+	text-align:left;
+	border: solid 1px #808080;
+}
+
+.MLAS_div_message_header
+{
+    text-align: left;
+    width: 100%;
+    background-color: #99ccff;
+}
+
+.MLAS_div_message_title
+{
+	margin: 0px;
+	padding-left: 2px;
+	text-align:left;
+	font-size:smaller;
+	float: left;
+	color: #000066;
+}
+
+.MLAS_font_red_weight
+{
+	font-weight:bolder;
+	color:#800000;
+}
+
+.EBM_Student_EditBox
+{
+	width: 50%;
+	float:left;
+}
+
+.EBM_Teacher_EditBox
+{
+	width: 100%;
+}
+
+.MLAS_font_red_hint
+{
+	color:red;
+}
+
+.MLAS_tc_contentBarChart
+{
+	background-color: #ffffff;
+	text-align:left;
+	border: solid 1px #808080;
+}
+
+.MLAS_accordionHeader2
+{
+    background-color: #78bde0;
+    border: 1px solid #2F4F4F;
+    color: White;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.MLAS_accordionHeader1
+{
+    background-color:#d57878;
+    border:1px solid #2F4F4F;
+    color:White;
+    font-family: Arial,sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    padding:5px;
+    margin-top:5px;
+    cursor:pointer;
+}
+
+.MLAS_accordionLink
+{
+    /*background-color:#D3DEEF;*/
+    font-size:16px;	
+    color:White;	
+}
+
+.MLAS_lb_name_text_phone
+{
+    text-align: center;
+    border: solid 1px #808080; 
+    background-color:White;
+    margin-left:2px;
+    margin-right:2px;
+    margin-top:5px;
+    padding-left:30px;
+    padding-right:30px;
+
+}
+.MLAS_div_phone
+{ 
+    width: 80%;
+    border: solid 1px #cccccc;
+    text-decoration: none;
+    text-align: left;
+    vertical-align: middle;
+}
+.MLAS_div_setup_item_title_phone
+{
+	margin: 0px;
+	padding: 0px;
+	text-align:center;
+	width: 150px;
+	float: left;
+	color: #4169e1;
+}
+.MLAS_div_setup_item_content_phone
+{
+	margin: 0px;
+	padding: 0px;
+	padding-left: 10px;
+	text-align:center;
+	width: 100%;
+	vertical-align:top;
+}
+.MLAS_div_click_phone
+{
+	width: 97%;
+    border: solid 1px #cccccc;
+    text-decoration: none;
+    text-align: left;
+    vertical-align: middle;
+    padding: 5px;
+    margin: 5px;
+}
+
+.MLAS_hb_activity_text_active
+{
+    text-align: left;
+    border: solid 1px #808080; 
+    width: 300px;
+    background-color:White;
+    margin-left:1px;
+    margin-top:5px;
+    padding:3px;
+}
+
+
+.MLAS_hb_activity_text
+{
+	text-align: left;
+    border: solid 1px #808080; 
+    width: 300px;
+    background-color:White;
+    margin-left:1px;
+    margin-top:5px;
+    padding:3px;
+	background-color: #ffd700;
+}
+.MLAS_hb_User_text_active
+{
+    text-align: left;
+    border: solid 1px #808080; 
+    width: 200px;
+    background-color:White;
+    margin-left:1px;
+    margin-top:5px;
+    padding:3px;
+}
+
+
+.MLAS_hb_User_text
+{
+	text-align: left;
+    border: solid 1px #808080; 
+    width: 200px;
+    background-color:White;
+    margin-left:1px;
+    margin-top:5px;
+    padding:3px;
+	background-color: #ffd700;
+}
+.MLAS_Label_font_size
+{
+	 font-size: 28px;
+}

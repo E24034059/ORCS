@@ -1,0 +1,38 @@
+﻿.ORCS_button_control
+{
+    color: #000000;
+    border: solid 1px #676788;
+    background-color: #e6e6fa;
+    cursor:pointer;
+    padding-top:2px;
+    width: 155px;
+}
+.ORCS_menu_button
+{
+	background-color: lightblue;
+	border: outset 1px;
+	border-color: gray;
+	font-size:xx-large;
+	width: 300px;
+    height: 80px;
+	cursor: pointer;
+}
+.ORCS_Exercise_button
+{
+    color: #000000;
+    border: solid 1px #676788;
+    background-color: #e6e6fa;
+    cursor:pointer;
+    padding-top:1px;
+    width: 120px;
+    font: medium;
+}
+.ORCS_Exercise_button_CanNotClick
+{
+    color: #c0c0c0;
+    border: solid 1px #676788;
+    background-color: #efefef;
+    padding-top:1px;
+    width: 120px;
+    font: medium;
+}

@@ -1,0 +1,57 @@
+﻿.MLAS_TextBox_font
+{
+	font-family: helvetica, sans-serif;
+	font-size: 20px;
+}
+.MLAS_font_red_weight
+{
+	font-weight:bolder;
+	color:#800000;
+}
+.MLAS_Label_font_size
+{
+	 font-size: 28px;
+}
+.MLAS_Idea_left_header_row
+{
+	text-align: center;
+	font-weight: bold; 
+	color: #ffffcc; 
+	background-color: #96D7F8;
+	width:100%
+}
+.MLAS_Idea_left_header_row_Content
+{
+	text-align: center;
+	width:90%;
+	border: solid 1px #000000;
+}
+.MLAS_Idea_left_header_row_ID
+{
+	width:5%;border: solid 1px #000000;
+}
+.MLAS_Idea_left_header_row_CHK
+{
+	text-align: center;
+	width:5%;
+	border: solid 1px #000000;
+}
+.MLAS_Idea_left_row_odd
+{
+	font-family: Arial;
+	color: #000000; 
+	background-color: #FFFFFF;
+}
+.MLAS_Idea_left_row_even
+{
+	font-family: Arial;
+	color: #006666; 
+	background-color: #EBFFF5;
+}
+
+.MLAS_Idea_left_row_Item
+{
+	font-weight: bold; 
+	padding: 2px; 
+	border: solid 1px #000000;
+}

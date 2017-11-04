@@ -1,0 +1,382 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls.WebParts;
+
+using ORCS.Util;
+using ORCS.DB;
+using ORCS.Base;
+using ORCS.DB.Exercise;
+using ORCS.DB.User;
+using ORCS.DB.Attendance;
+using ORCS.DB.Administrator;
+
+public partial class Exercise_ViewExFile : ORCS.ORCS_Page
+{
+    string strExerciseCondID = "";  //ExerciseCondID
+    string strExerciseID = "";      //ExerciseID
+    string strUserID = "";          //UserID
+    string strGroupID = "";         //GroupID
+    string strUploadMode = "";      //UploadMode
+    string strAuthority = "";       //Authority
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //抓取URL參數
+        if (Request.QueryString["cExerciseCondID"] != null)
+        {
+            strExerciseCondID = Request.QueryString["cExerciseCondID"].ToString();  //ExerciseCondID
+        }
+        if (Request.QueryString["cExerciseID"] != null)
+        {
+            strExerciseID = Request.QueryString["cExerciseID"].ToString();          //ExerciseID
+        }
+        if (Request.QueryString["cUserID"] != null)
+        {
+            strUserID = Request.QueryString["cUserID"].ToString();                  //UserID
+        }
+        if (Request.QueryString["cGroupID"] != null)
+        {
+            strGroupID = Request.QueryString["cGroupID"].ToString();                //GroupID
+        }
+        if (Request.QueryString["cUploadMode"] != null)
+        {
+            strUploadMode = Request.QueryString["cUploadMode"].ToString();          //UploadMode
+        }
+        if (Request.QueryString["cAuthority"] != null)
+        {
+            strAuthority = Request.QueryString["cAuthority"].ToString();           //Authority
+        }
+
+        //定義檔案列表標題
+        lbExFileList.Text = "第 " + strExerciseID.Split('_')[1] +  " 份作品檔案列表";
+        //載入作品檔案列表
+        LoadExFileList();
+        //載入題目列表
+        LoadExList();
+
+    }
+    //載入作品檔案列表
+    protected void LoadExFileList()
+    {
+        //檢查是否由Timer所引起
+        if (IsPostBack)
+        {
+            tbExFileList.Rows.Clear();
+        }
+        //--------------------------------作品檔案列表標題-----------------------------------------
+        //定義作品檔案列表標題
+        HtmlTableRow tbrExFileListTitle = new HtmlTableRow();
+        tbrExFileListTitle.Attributes.Add("Style", "Font-size: 20px; background-color: lightgray");
+        tbrExFileListTitle.Align = "center";
+        HtmlTableCell tbcUserNameTitle = new HtmlTableCell();
+        tbcUserNameTitle.Width = "20%";
+        tbcUserNameTitle.Attributes.Add("Style", "border: 2px solid; border-color: black");
+        HtmlTableCell tbcExFileListTitleFinishState = new HtmlTableCell();
+        tbcExFileListTitleFinishState.Width = "20%";
+        tbcExFileListTitleFinishState.Attributes.Add("Style", "border: 2px solid; border-color: black");
+        HtmlTableCell tbcExFileListTitlebtnOpenHtml = new HtmlTableCell();
+        tbcExFileListTitlebtnOpenHtml.Width = "20%";
+        tbcExFileListTitlebtnOpenHtml.Attributes.Add("Style", "border: 2px solid; border-color: black");
+        HtmlTableCell tbcExFileListTitlebtnDownload = new HtmlTableCell();
+        tbcExFileListTitlebtnDownload.Width = "20%";
+        tbcExFileListTitlebtnDownload.Attributes.Add("Style", "border: 2px solid; border-color: black");
+        HtmlTableCell tbcExFileListTitleUploadNumber = new HtmlTableCell();
+        tbcExFileListTitleUploadNumber.Width = "20%";
+        tbcExFileListTitleUploadNumber.Attributes.Add("Style", "border: 2px solid; border-color: black");
+
+        //定義標題名稱
+        tbcUserNameTitle.InnerText = "姓名";
+        tbcExFileListTitleFinishState.InnerText = "上傳狀態";
+        tbcExFileListTitlebtnOpenHtml.InnerHtml = "網頁瀏覽";
+        tbcExFileListTitlebtnDownload.InnerText = "下載";
+        tbcExFileListTitleUploadNumber.InnerText = "上傳數/總題數";
+
+        //加入Table
+        tbrExFileListTitle.Cells.Add(tbcUserNameTitle);
+        tbrExFileListTitle.Cells.Add(tbcExFileListTitleFinishState);
+        tbrExFileListTitle.Cells.Add(tbcExFileListTitlebtnOpenHtml);
+        tbrExFileListTitle.Cells.Add(tbcExFileListTitlebtnDownload);
+        tbrExFileListTitle.Cells.Add(tbcExFileListTitleUploadNumber);
+        tbExFileList.Rows.Add(tbrExFileListTitle);
+
+        //--------------------------------作品檔案列表內容-----------------------------------------
+        //取得作品檔案列表
+        DataTable dtExerciseCond = clsExercise.ORCS_ExerciseCondition_SELECT_by_cExerciseID_GroupID(strExerciseID, strGroupID);
+        //取得學生出席名單
+        DataTable dtStudentAtt = clsAttendance.ORCS_StudentAttendance_SELECT_by_UserID_GroupID("%", strGroupID);
+        //取得個人作答模式題目數目
+        DataTable dtIndivExerciseCond = clsExercise.ORCS_ExerciseCondition_SELECT_by_iClassGroupID_iAnswerMode(strGroupID, "1");
+        //取得小組作答模式題目數目
+        DataTable dtTeamExerciseCond = clsExercise.ORCS_ExerciseCondition_SELECT_by_iClassGroupID_iAnswerMode(strGroupID, "2");
+        //取得個人出席名單
+        DataTable dtIndivStudentAtt = clsAttendance.ORCS_StudentAttendance_SELECT_by_UserID_GroupID_GroupMode("%", strGroupID, "0");
+        //取得小組出席名單
+        DataTable dtTeamStudentAtt = clsAttendance.ORCS_StudentAttendance_SELECT_by_UserID_GroupID_GroupMode("%", strGroupID, "1");
+        //目前出題總數
+        int allQuestionNumber = 0;
+        //總出題數大於0題
+        if (dtIndivStudentAtt.Rows.Count > 0 && dtTeamStudentAtt.Rows.Count > 0)
+            allQuestionNumber = (dtIndivExerciseCond.Rows.Count / dtIndivStudentAtt.Rows.Count) + (dtTeamExerciseCond.Rows.Count / dtTeamStudentAtt.Rows.Count);
+        else if (dtIndivStudentAtt.Rows.Count > 0)
+            allQuestionNumber = (dtIndivExerciseCond.Rows.Count / dtIndivStudentAtt.Rows.Count);
+        if (dtExerciseCond.Rows.Count > 0)
+        {
+            foreach (DataRow drExerciseCond in dtExerciseCond.Rows)
+            {
+                //定義作品檔案列表
+                HtmlTableRow tbrExFileList = new HtmlTableRow();
+                tbrExFileList.Attributes.Add("Style", "Font-size: 20px");
+                tbrExFileList.Align = "center";
+                HtmlTableCell tbcUserName = new HtmlTableCell();
+                tbcUserName.Attributes.Add("Style", "border: 2px solid; border-color: black");
+                HtmlTableCell tbcExFileListFinishState = new HtmlTableCell();
+                tbcExFileListFinishState.Attributes.Add("Style", "border: 2px solid; border-color: black");
+                HtmlTableCell tbcExFileListbtnOpenHtml = new HtmlTableCell();
+                tbcExFileListbtnOpenHtml.Attributes.Add("Style", "border: 2px solid; border-color: black");
+                HtmlTableCell tbcExFileListbtnDownload = new HtmlTableCell();
+                tbcExFileListbtnDownload.Attributes.Add("Style", "border: 2px solid; border-color: black");
+                HtmlTableCell tbcExFileListUploadNumber = new HtmlTableCell();
+                tbcExFileListUploadNumber.Attributes.Add("Style", "border: 2px solid; border-color: black");
+
+                //定義作品檔案列表內容
+                //姓名
+                Label lbUserName = new Label();
+                if (drExerciseCond["iAnswerMode"].ToString() == "1")//取得個人名稱
+                    lbUserName.Text = clsORCSUser.ORCS_User_SELECT_by_UserID(drExerciseCond["cUserID"].ToString()).Rows[0]["cUserName"].ToString();
+                else if (drExerciseCond["iAnswerMode"].ToString() == "2")//取得小組名稱
+                    lbUserName.Text = clsGroup.ORCS_TempGroup_SELECT_By_cTempGroupID(drExerciseCond["cUserID"].ToString()).Rows[0]["cTempGroupName"].ToString();
+                //上傳狀態(檢查ORCS_FileUploadData資料表是否有資料)
+                Label lbExFileListFinishState = new Label();
+
+                //「網頁瀏覽」按鈕
+                Button btnOpenHtml = new Button();
+                //「下載」按鈕
+                Button btnDownload = new Button();
+                //上傳作品檔案數/總題目數
+                Label lbUploadNumber = new Label();
+                //上傳模式是上傳檔案模式 iUploadMode 上傳檔案:0 上傳文字:1
+                if (drExerciseCond["iUploadMode"].ToString().Equals("0"))
+                {
+                    DataTable dtFileUploadData = clsExercise.ORCS_FileUploadData_SELECT_by_ExerciseCondID_ExerciseID_UserID(strExerciseCondID, strExerciseID, drExerciseCond["cUserID"].ToString());
+                    if (dtFileUploadData.Rows.Count > 0) //有檔案
+                        lbExFileListFinishState.Text = "上傳完成";
+                    else //無檔案
+                    {
+                        //判斷學生有無出席
+                        DataRow[] dr = dtStudentAtt.Select("cUserID='" + drExerciseCond["cUserID"].ToString() + "'");
+                        //如果學生出席狀態是準時和遲到設定為尚未上傳 0:未到 1:準時 2:遲到 3:早退
+                        if (dr[0]["iAttendanceCond"].ToString().Equals("1") || dr[0]["iAttendanceCond"].ToString().Equals("2"))
+                        {
+                            lbExFileListFinishState.ForeColor = System.Drawing.Color.Red;
+                            lbExFileListFinishState.Text = "尚未上傳";
+                        }
+                        else//如果是缺席或早退設定為未出席
+                        {
+                            lbExFileListFinishState.ForeColor = System.Drawing.Color.Gray;
+                            lbExFileListFinishState.Text = "未出席";
+                        }
+                    }
+
+                    //「網頁瀏覽」按鈕
+                    btnOpenHtml.Font.Size = 14;
+                    btnOpenHtml.Text = "網頁瀏覽";
+                    if (dtFileUploadData.Rows.Count > 0) //有檔案才加ID
+                    {
+                        //取得檔案名稱
+                        string strFileName = dtFileUploadData.Rows[0]["cFileName"].ToString();
+                        //取得檔案副檔名(變大寫)
+                        string strSubFileName = strFileName.Split('.')[1].ToUpper();
+                        btnOpenHtml.ID = "btnOpenHtml-" + strExerciseCondID + "-" + strExerciseID + "-" + drExerciseCond["cUserID"].ToString() + "-" + strFileName;//btnOpenHtml-ExerciseCondID-ExerciseID-UserID-FileName
+                        //若檔案不符合以下檔案格式網頁瀏覽按鈕設成不可使用
+                        if (!(strSubFileName == "PDF" || strSubFileName == "JPG" || strSubFileName == "JPEG"
+                            || strSubFileName == "GIF" || strSubFileName == "PNG" || strSubFileName == "BMP" || strSubFileName == "TXT" || strSubFileName == "DOC" || strSubFileName == "DOCX" || strSubFileName == "PPT" || strSubFileName == "PTTX"
+                            || strSubFileName == "XLS" || strSubFileName == "XLSX"))
+                        {
+                            btnOpenHtml.Enabled = false;
+                        }
+                    }
+                    else //無檔案隱藏按鈕
+                        btnOpenHtml.Visible = false;
+                    btnOpenHtml.Click += new EventHandler(btnOpenHtml_Click);
+
+
+                    //「下載」按鈕
+                    btnDownload.Font.Size = 14;
+                    btnDownload.Text = "下載";
+                    if (dtFileUploadData.Rows.Count > 0) //有檔案才加ID
+                        btnDownload.ID = "btnDownload-" + strExerciseCondID + "-" + strExerciseID + "-" + drExerciseCond["cUserID"].ToString() + "-" + dtFileUploadData.Rows[0]["cFileName"].ToString();//btnDownload-ExerciseCondID-ExerciseID-UserID-FileName
+                    else //無檔案隱藏按鈕
+                        btnDownload.Visible = false;
+                    btnDownload.Click += new EventHandler(btnDownload_Click);
+
+                }else//上傳文字模式
+                {
+                    DataTable dtTextUploadData = clsExercise.ORCS_TextUploadData_SELECT_by_ExerciseCondID_ExerciseID_UserID(strExerciseCondID, strExerciseID, drExerciseCond["cUserID"].ToString());
+                    if (dtTextUploadData.Rows.Count > 0) //有檔案
+                        lbExFileListFinishState.Text = "上傳完成";
+                    else //無檔案
+                    {
+                        //判斷學生有無出席
+                        DataRow[] dr = dtStudentAtt.Select("cUserID='" + drExerciseCond["cUserID"].ToString() + "'");
+                        //如果學生出席狀態是準時和遲到設定為尚未上傳 0:未到 1:準時 2:遲到 3:早退
+                        if (dr[0]["iAttendanceCond"].ToString().Equals("1") || dr[0]["iAttendanceCond"].ToString().Equals("2"))
+                        {
+                            lbExFileListFinishState.ForeColor = System.Drawing.Color.Red;
+                            lbExFileListFinishState.Text = "尚未上傳";
+                        }
+                        else//如果是缺席或早退設定為未出席
+                        {
+                            lbExFileListFinishState.ForeColor = System.Drawing.Color.Gray;
+                            lbExFileListFinishState.Text = "未出席";
+                        }
+                    }
+
+                    //「網頁瀏覽」按鈕
+                    btnOpenHtml.Font.Size = 14;
+                    btnOpenHtml.Text = "網頁瀏覽";
+                    if (dtTextUploadData.Rows.Count > 0) //有檔案才加ID
+                    {
+                        btnOpenHtml.ID = "btnOpenByShowTextUpload-" + strExerciseCondID + "-" + strExerciseID + "-" + drExerciseCond["cUserID"].ToString() + "-" + drExerciseCond["iClassGroupID"].ToString() + "-" + drExerciseCond["iAnswerMode"].ToString() + "-" + strAuthority;
+                    }
+                    else //無檔案隱藏按鈕
+                        btnOpenHtml.Visible = false;
+                    btnOpenHtml.Click += new EventHandler(btnOpenByShowTextUpload_Click);
+
+
+                    //「下載」按鈕
+                    btnDownload.Visible = false;
+
+                }
+
+                //上傳作品檔案數/總題目數
+                DataTable dtAllFileUploadData = clsExercise.ORCS_FileUploadData_SELECT_by_ExerciseCondID_UserID(strExerciseCondID, drExerciseCond["cUserID"].ToString());
+                DataTable dtAllTextUploadData = clsExercise.ORCS_TextUploadData_SELECT_by_ExerciseCondID_UserID(strExerciseCondID, drExerciseCond["cUserID"].ToString());
+                lbUploadNumber.Text = (dtAllFileUploadData.Rows.Count + dtAllTextUploadData.Rows.Count).ToString() + "/" + allQuestionNumber;
+
+                //加入Table
+                tbcUserName.Controls.Add(lbUserName);
+                tbcExFileListFinishState.Controls.Add(lbExFileListFinishState);
+                tbcExFileListbtnOpenHtml.Controls.Add(btnOpenHtml);
+                tbcExFileListbtnDownload.Controls.Add(btnDownload);
+                tbcExFileListUploadNumber.Controls.Add(lbUploadNumber);
+                tbrExFileList.Cells.Add(tbcUserName);
+                tbrExFileList.Cells.Add(tbcExFileListFinishState);
+                tbrExFileList.Cells.Add(tbcExFileListbtnOpenHtml);
+                tbrExFileList.Cells.Add(tbcExFileListbtnDownload);
+                tbrExFileList.Cells.Add(tbcExFileListUploadNumber);
+                tbExFileList.Rows.Add(tbrExFileList);
+            }
+        }
+    }
+    //「網頁瀏覽」按鈕事件
+    protected void btnOpenHtml_Click(object sender, EventArgs e)
+    {
+        //取得上傳的學生ID
+        string strStudentID = (sender as Button).ID.ToString().Split('-')[3];
+        //取得檔案名稱
+        string strFileName = (sender as Button).ID.ToString().Split('-')[4];
+        //取得檔案副檔名(變大寫)
+        string strSubFileName = strFileName.Split('.')[1].ToUpper();
+        //檔案路徑
+        string strFilePath = "ExFileUpload/" + strExerciseCondID + "/" + strExerciseID + "/" + strStudentID + "/" + strFileName;
+        //若檔案符合以下檔案則可直接從網頁瀏覽:PDF,JPG,JPEG,GIF,PNG,BMP
+        if (strSubFileName == "PDF" || strSubFileName == "JPG" || strSubFileName == "JPEG"
+            || strSubFileName == "GIF" || strSubFileName == "PNG" || strSubFileName == "BMP" || strSubFileName == "TXT")
+            ScriptManager.RegisterClientScriptBlock(updatePanelViewExFile, this.GetType(), "click", "window.open('" + strFilePath + "','OpenHtml', 'resizable=yes, width=700px, height=620px,scrollbars=yes')", true); 
+        else if (strSubFileName == "DOC" || strSubFileName == "DOCX" || strSubFileName == "PPT" || strSubFileName == "PTTX"
+                 || strSubFileName == "XLS" || strSubFileName == "XLSX")
+            ScriptManager.RegisterClientScriptBlock(updatePanelViewExFile, this.GetType(), "click", "window.open('https://docs.google.com/viewer?url=http://140.116.72.28/ORCS/Exercise/" + HttpUtility.UrlEncode(strFilePath) + "','OpenHtml', 'resizable=yes, width=700px, height=620px,scrollbars=yes')", true); 
+        else
+            ScriptManager.RegisterClientScriptBlock(updatePanelViewExFile, this.GetType(), "alert", "<script>alert('此檔案無法在網頁瀏覽')</script>", true); 
+    }
+
+    //「網頁瀏覽」按鈕事件 觀看上傳文字模式
+    protected void btnOpenByShowTextUpload_Click(object sender, EventArgs e)
+    {
+        //strExerciseCondID
+        string strExerciseCondID = (sender as Button).ID.ToString().Split('-')[1];
+        //strExerciseID
+        string strExerciseID = (sender as Button).ID.ToString().Split('-')[2];
+        //取得作答者ID
+        string strStudentID = (sender as Button).ID.ToString().Split('-')[3];
+        //取得課程ID
+        string strCourseID = (sender as Button).ID.ToString().Split('-')[4];
+        //取得作答模式
+        string strAnswerMode = (sender as Button).ID.ToString().Split('-')[5];
+        //取得使用者權限
+        string strAuthority = (sender as Button).ID.ToString().Split('-')[6];
+
+        ScriptManager.RegisterClientScriptBlock(updatePanelViewExFile, this.GetType(), "open_paper", "window.open('ShowTextUpload.aspx?cExerciseCondID=" + strExerciseCondID + "&cExerciseID=" + strExerciseID + "&cGroupID=" + strCourseID + "&cUserID=" + strStudentID + "&cAnswerMode=" + strAnswerMode + "&cAuthority=" + strAuthority + "','FileUpload', 'width=700px, height=800px')", true);
+    }
+
+    //「下載」按鈕事件
+    protected void btnDownload_Click(object sender, EventArgs e)
+    {
+        //取得上傳的學生ID
+        string strStudentID = (sender as Button).ID.ToString().Split('-')[3];
+        //取得檔案名稱
+        string strFileName = (sender as Button).ID.ToString().Split('-')[4];
+        //檔案路徑
+        string strFilePath = Server.MapPath("~/Exercise/ExFileUpload/" + strExerciseCondID + "/" + strExerciseID + "/" + strStudentID + "/" + strFileName);
+        ScriptManager.RegisterClientScriptBlock(updatePanelViewExFile, this.GetType(), "click", "window.open('http://140.116.72.28/ORCS/Exercise/FileDownload.aspx?filePath=" + HttpUtility.UrlEncode(strFilePath) + "&fileName=" + HttpUtility.UrlEncode(strFileName) + "','OpenHtml', 'resizable=yes, width=700px, height=620px')", true); 
+    }
+
+    /// <summary>
+    /// 自動重新載入作品檔案列表
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void timerExFileList_Tick(object sender, EventArgs e)
+    {
+        //載入作品檔案列表
+        LoadExFileList();
+    }
+
+    /// <summary>
+    /// ddlExList載入所有題目
+    /// </summary>
+    private void LoadExList()
+    {
+        //檢查是否由Timer所引起
+        if (!IsPostBack)
+        {
+            //取得課堂所有題目ID
+            DataTable dtTotalExID = clsExercise.ORCS_ExerciseCondition_SELECT_by_iClassGroupID_For_QuestionNumber(strGroupID);
+            //取得下拉式選單選項
+            List<ListItem> lExs = new List<ListItem>();
+            for (int i = 0; i < dtTotalExID.Rows.Count; i++)
+            {
+                DataTable dtTotalExID2 = clsExercise.ORCS_ExerciseCondition_SELECT_by_cExerciseID(dtTotalExID.Rows[i]["cExerciseID"].ToString());
+                if (DBNull.Value.Equals(dtTotalExID2.Rows[0]["cPaperID"]))
+                {
+                    string strExID = dtTotalExID.Rows[i]["cExerciseID"].ToString();
+                    string strExNumber = (int.Parse(strExID.Split('_')[1]) > 10 ? strExID.Split('_')[1] : " " + strExID.Split('_')[1]);
+                    ListItem liEx = new ListItem("第" + strExNumber + "份作品檔案", strExID);
+                    if (strExerciseID.Equals(strExID))
+                        liEx.Selected = true;
+                    lExs.Add(liEx);
+                }
+            }
+            //對下拉式選單選項依題號做排序
+            lExs.Sort((x, y) => { return int.Parse(x.Value.Split('_')[1]).CompareTo(int.Parse(y.Value.Split('_')[1])); });
+            foreach (ListItem liEx in lExs)
+            {
+                ddlExList.Items.Add(liEx);
+            }
+        }
+    }
+
+
+    protected void ddlExList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //所選擇的題目ID
+        string strSlectedExerciseID = ddlExList.SelectedItem.Value;
+        string strUrlPath = "../Exercise/ViewExFile.aspx?cExerciseCondID=" + strExerciseCondID + "&cExerciseID=" + strSlectedExerciseID + "&cUserID=" + strUserID + "&cGroupID=" + strGroupID;
+        Response.Redirect(strUrlPath);
+    }
+}

@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+
+using ORCS.Util;
+using ORCS.DB;
+using ORCS.Base;
+using ORCS.DB.Exercise;
+
+public partial class Exercise_FileUpload : ORCS.ORCS_Page
+{
+    string strExerciseCondID = "";  //ExerciseCondID
+    string strExerciseID = "";      //ExerciseID
+    string strUserID = "";          //UserID
+    string strGroupID = "";         //GroupID
+    bool bUploadYet = false; //定義是否上傳過檔案
+    //載入頁面事件
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //抓取URL參數
+        if (Request.QueryString["cExerciseCondID"] != null)
+        {
+            strExerciseCondID = Request.QueryString["cExerciseCondID"].ToString();  //ExerciseCondID
+        }
+        if (Request.QueryString["cExerciseID"] != null)
+        {
+            strExerciseID = Request.QueryString["cExerciseID"].ToString();          //ExerciseID
+        }
+        if (Request.QueryString["cUserID"] != null)
+        {
+            strUserID = Request.QueryString["cUserID"].ToString();                  //UserID
+        }
+        if (Request.QueryString["cGroupID"] != null)
+        {
+            strGroupID = Request.QueryString["cGroupID"].ToString();                //GroupID
+        }
+        //檢查是否上傳過檔案
+        bUploadYet = CheckUpload();
+    }
+    //檢查是否上傳過檔案
+    protected bool CheckUpload()
+    {
+        DataTable dtFileUploadData = clsExercise.ORCS_FileUploadData_SELECT_by_ExerciseCondID_ExerciseID_UserID(strExerciseCondID, strExerciseID, strUserID);
+        lbExFile.Text = "請選擇要上傳的作品檔案(第" + strExerciseID.Split('_')[1] + "份):";
+        if (dtFileUploadData.Rows.Count > 0)
+        {
+            lbUploadYet.Visible = true;
+            lbUploadYet.Text = "已經上傳過檔案(" + dtFileUploadData.Rows[0]["cFileName"].ToString() + ")，若重新上傳將覆蓋原始檔案";
+            return true;
+        }
+        else
+            return false;
+    }
+    //「上傳」按鈕事件
+    protected void btnUpload_Click(object sender, EventArgs e)
+    {
+        //判斷是否有檔案
+        if (fuExFile.HasFile)
+        {
+            //定義要上傳檔案的伺服器路徑(ORCS/Exercise/ExFileUpload/ExerciseCondID/ExerciseID/UserID/FileName)
+            string strSerPath = Server.MapPath("~/Exercise/ExFileUpload/" + strExerciseCondID + "/" + strExerciseID + "/" + strUserID);
+            //建立上傳檔案資料夾(若已建立系統會自動忽略)
+            Directory.CreateDirectory(strSerPath);
+            //定義檔名(去掉"-")
+            string strFileName = fuExFile.FileName.Replace("-","");
+            //定義上傳路徑和檔名
+            string strFilePath = strSerPath + "/" + strFileName;
+            //儲存檔案
+            fuExFile.SaveAs(strFilePath);
+            //檢查是否已經有存在的檔案，若有則更新
+            if (bUploadYet == true)
+            {
+                //更新ORCS_FileUploadData資料表
+                clsExercise.ORCS_FileUploadData_UPDATE(strExerciseCondID, strExerciseID, strUserID, strFileName);
+            }
+            else
+            {
+                //將上傳的作品檔案資料存進ORCS_FileUploadData資料表
+                clsExercise.ORCS_FileUploadData_INSERT(strExerciseCondID, strExerciseID, strUserID, strFileName, strGroupID);
+            }
+            //更新作答題目參數
+            clsExercise.ORCS_ExerciseCondition_UPDATE(strExerciseID, strUserID, "1", strGroupID);
+            //上傳完成
+            Page.ClientScript.RegisterStartupScript(GetType(), "FinishSave", "window.close()", true);
+        }
+        else
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "NoFile", "alert('請選擇作品檔案')", true);
+        }
+    }
+}

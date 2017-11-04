@@ -1,0 +1,9 @@
+SELECT COUNT(*) FROM fmaforall_ch
+
+
+select TABLE_NAME,COLUMN_NAME, from INFORMATION_SCHEMA.COLUMNS
+
+
+select Top 100 * from fmaforall_ch where short_value like 'A%'
+
+select Top 100 * from fmaforall_ch where CONVERT(NVARCHAR(255),long_value) != null

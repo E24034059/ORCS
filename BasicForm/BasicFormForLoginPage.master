@@ -1,0 +1,81 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="BasicFormForLoginPage.master.cs" Inherits="BasicForm_BasicFormForHomPage" %>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>線上點名系統</title>
+    <script type="text/javascript" src="../BasicForm/ORCS_basic.js"></script>
+</head>
+<body onload="recalculate_table()" onresize="recalculate_table()" >
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <!--加入固定Scroll bar function-->
+        <script type="text/javascript">
+            var xPos, yPos;
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
+            prm.add_beginRequest(BeginRequestHandler);
+            prm.add_endRequest(EndRequestHandler);
+            function BeginRequestHandler(sender, args) {
+                xPos = $get('divMasterCPH').scrollLeft;
+                yPos = $get('divMasterCPH').scrollTop;
+            }
+            function EndRequestHandler(sender, args) {        
+                $get('divMasterCPH').scrollLeft = xPos;
+                $get('divMasterCPH').scrollTop = yPos;
+            }
+        </script>
+        <!--頁面物件-->
+        <table id="header_table" runat="server" style="width: 99%;text-align: left;" cellpadding="0" cellspacing="0">
+            <tr style="height: 8px;">
+                <td rowspan="3" style="padding: 0; margin: 0; border: 0;">
+                    <img src="../App_Themes/general/images/title.gif" alt="" width="150" height="50" />
+                </td>
+                <td style="text-align: right;">
+                    <span class="ORCS_span_function" id="spanToolbar" runat="server">
+                        <a href="#" style="background-color:transparent;border:none;cursor:pointer" onclick="window.open('../PushMessage/MessageModeChoose.aspx')">訊息推播</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <asp:HyperLink ID="hlEditGroup" runat="server" NavigateUrl="../Administrator/EditGroupMember.aspx">群組管理</asp:HyperLink>
+                        <asp:Label ID="lbEditGroup" runat="server" Text="&nbsp;&nbsp;|&nbsp;&nbsp;"></asp:Label>
+                        <asp:HyperLink ID="hlEditClassTimeTable" runat="server" NavigateUrl="../Administrator/EditClassTimeTable.aspx">課表</asp:HyperLink>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <asp:HyperLink ID="hlDataMining" runat="server" NavigateUrl="../DataMining/DataMiningEntry.aspx">資料探勘</asp:HyperLink>
+                        <asp:Label ID="lbDataMining" runat="server" Text="&nbsp;&nbsp;|&nbsp;&nbsp;"></asp:Label>
+                        <asp:HyperLink ID="hlMenu" runat="server" NavigateUrl="../Homepage/Homepage.aspx">首頁</asp:HyperLink>
+                        &nbsp;&nbsp;
+                        <!--暫時隱藏，以後從HINTS登出-->
+                        <asp:HyperLink ID="hlLog" runat="server" NavigateUrl="../Login/Login.aspx" Visible="false">登出</asp:HyperLink>
+                        &nbsp;&nbsp;
+                    </span>
+                </td>
+            </tr>
+            <tr style="height: 20px;">
+                <td class="ORCS_title">
+                    &nbsp;<asp:Label ID="lTitle" runat="server" Text="TITLE"></asp:Label>
+                </td>
+            </tr>
+            <tr><td style="height: 3px;"></td></tr>
+            <tr>
+                <td colspan="2">
+                    <hr />
+                    <div class="ORCS_span_title"><asp:Label ID="lspanTitle" runat="server" Text=""></asp:Label></div>
+                    <asp:ContentPlaceHolder id="cphAdvancedProcessArea" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+        </table>
+        <table id="content_table" style="width: 99%; height: 90%; text-align: left;" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <div id="divMasterCPH" style="border: solid 0px #cccccc; height: 99%; overflow: auto;">
+                        <asp:ContentPlaceHolder id="cphContentArea" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div id="divFooter" runat="server" style="text-align: right; font-size: 70%; width: 99%;">
+            mirac ORCS system 版權所有 @ 2013 All Rights Reserved 
+        </div>
+    </form>
+</body>
+</html>

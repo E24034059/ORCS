@@ -1,0 +1,133 @@
+﻿.MLAS_TextBox_font
+{
+	font-family: helvetica, sans-serif;
+	font-size: 24px;
+}
+.MLAS_font_red_weight
+{
+	font-weight:bolder;
+	color:#800000;
+}
+.MLAS_Label_font_size
+{
+	 font-size: 28px;
+}
+.MLAS_Idea_left_header_row
+{
+	 text-align: center;
+	 font-weight: bold; 
+	 color: #ffffEE; 
+	 background-color: #2D6D9F;
+	 width:100%;
+}
+.MLAS_Idea_left_header_row_Content
+{
+	text-align: center;
+	width:90%;
+	border: solid 1px;
+	border-color: #999999;
+}
+.MLAS_Idea_left_header_row_ID
+{
+	text-align: center;
+	width:5%;
+	border: solid 1px; 
+	border-color: #999999;
+}
+.MLAS_Idea_left_header_row_CHK
+{
+	text-align: center;
+	width:5%;
+	border: solid 1px; 
+	border-color: #999999;
+}
+.MLAS_Idea_left_row_odd
+{
+	font-family: Arial;
+	color: #000000; 
+	background-color: #FFFFFF;
+}
+.MLAS_Idea_left_row_even
+{
+	font-family: Arial;
+	color: #000000; 
+	background-color: #ECF9FF;
+}
+.MLAS_Idea_left_row_Item
+{
+	font-weight: bold; 
+	padding: 2px; 
+	border: solid 1px #999999;
+}
+.MLAS_Idea_right_header_row
+{
+	font-weight: bold; 
+	color: #ffffcc; 
+	background-color: #2D6D9F; 
+	width:100%
+}
+.MLAS_Idea_right_header_row
+{
+	font-weight: bold; 
+	color: #ffffcc; 
+	background-color: #2D6D9F; 
+	width:100%
+}
+.MLAS_Idea_right_header_row_ID
+{
+	text-align: center;
+	width:3%;
+	border:solid 1px #999999;
+}
+.MLAS_Idea_right_header_row_Title
+{
+	text-align: center;
+	width:10%;
+	border:solid 1px #999999;
+}
+.MLAS_Idea_right_header_row_Content
+{
+	text-align: center; 
+	width:64%;
+	border: solid 1px #999999;
+}
+.MLAS_Idea_right_header_row_Delete
+{
+	text-align: center;
+	width:13%;
+	border:solid 1px #999999;
+}
+.MLAS_Idea_right_header_row_Edit
+{
+	text-align: center;
+	width:13%;
+	border:solid 1px #999999;
+}
+.MLAS_Idea_right_row_Item
+{
+	font-weight: bold; 
+	padding: 2px; 
+	border: solid 1px #999999;
+	font-size: 24;
+}
+.MLAS_Idea_right_row_odd
+{
+	 font-family: Arial;
+	 color: #000000; 
+	 background-color: #FFFFFF;
+}
+.MLAS_Idea_right_row_even
+{
+	font-family: Arial;
+	color: #000000; 
+	background-color: #ECF9FF;
+}
+.MLAS_Idea_header_edit_row
+{
+	text-align: center;
+	font-weight: bold; 
+	color: #ffffEE; 
+	background-color: #2D6D9F;
+	width:100%; 
+	font-size: 24;
+}
