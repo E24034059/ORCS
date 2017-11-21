@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<configuration>
+  <appSettings>
+    <add key="masterFile" value="~/BasicForm/BasicForm.master"/>
+    <add key="DefaultLanguage" value="zh-TW"/>
+  </appSettings>
+  <connectionStrings>
+    <add name="connMLASDB" connectionString="Data Source=localhost;Initial Catalog=MLASDB;Persist Security Info=True;User ID=MLAS;Password=mlasuser" providerName="System.Data.SqlClient"/>
+    <add name="connORCSDB" connectionString="Data Source=localhost;Initial Catalog=ORCSDB;Persist Security Info=True;User ID=ORCS;Password=orcsuser" providerName="System.Data.SqlClient"/>
+    <add name="connHintsDB" connectionString="Data Source=localhost;Initial Catalog=NewVersionHintsDB;Persist Security Info=True;User ID=hints;Password=mirac" providerName="System.Data.SqlClient"/>
+    <add name="connAllSystemDB" connectionString="Data Source=localhost;Initial Catalog=NewVersionHintsDB;Persist Security Info=True;User ID=AllSystem;Password=mirac" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+  <location path="Exercise/TextUpload.aspx">
+    <system.web>
+      <httpRuntime requestValidationMode="2.0"/>
+    </system.web>
+  </location>
+  <system.web>
+    <!-- 
+            Set compilation debug="true" to insert debugging 
+            symbols into the compiled page. Because this 
+            affects performance, set this value to true only 
+            during development.
+        -->
+    <compilation debug="true" targetFramework="4.0">
+      <assemblies>
+        <add assembly="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+        <add assembly="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
+      </assemblies>
+    </compilation>
+    <!--
+            The <authentication> section enables configuration 
+            of the security authentication mode used by 
+            ASP.NET to identify an incoming user. 
+        -->
+    <authentication mode="Windows"/>
+    <!--
+            The <customErrors> section enables configuration 
+            of what to do if/when an unhandled error occurs 
+            during the execution of a request. Specifically, 
+            it enables developers to configure html error pages 
+            to be displayed in place of a error stack trace.
+
+        <customErrors mode="RemoteOnly" defaultRedirect="GenericErrorPage.htm">
+            <error statusCode="403" redirect="NoAccess.htm" />
+            <error statusCode="404" redirect="FileNotFound.htm" />
+        </customErrors>
+        -->
+    <pages theme="general" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID"/>
+    <sessionState timeout="180"/>
+  </system.web>
+  <!-- 
+        The system.webServer section is required for running ASP.NET AJAX under Internet
+        Information Services 7.0.  It is not necessary for previous version of IIS.
+    -->
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false"/>
+    <modules runAllManagedModulesForAllRequests="true"/>
+  </system.webServer>
+</configuration>

@@ -24,7 +24,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ORCS", "http://localhost/OR
 		SlnRelativePath = "E:\Hints_2Peter\ORCS\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gradeprogram", "C:\Users\chiu\Desktop\Integrate Program comparing to Hints\gradeprogram\gradeprogram\gradeprogram\gradeprogram.csproj", "{A0A7ECC2-C402-414F-B04B-B1E672260649}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gradeprogram", "C:\Users\chiu\Desktop\Integrate Program comparing to Hints\gradeprogram\gradeprogram\gradeprogram.csproj", "{A0A7ECC2-C402-414F-B04B-B1E672260649}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
