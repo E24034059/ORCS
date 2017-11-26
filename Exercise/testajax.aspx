@@ -18,8 +18,8 @@
     $.ajax(
                              {
                                  url: "MarkProgramQuestion.aspx",
-                                 data: "{'ProgramPath':'dasd','cQID':'sdad','StuCouHWDe_ID':'all','questionNum':'Q4'}",
-                                 type: "POST",
+                                 data: "ProgramPath=C:\\Users\\chiu\\Desktop\\Integrate_Program_comparing_to_Hints\\gradeprogram\\gradeprogram\\HWfile\\資料查詢\\HW1&cQID=tea1_Q_20171123182738&StuCouHWDe_ID=all&questionNum=Q4",
+                                 type: "post",
                                  cache: false,
                                  async: false,
                                  dataType:"text",
