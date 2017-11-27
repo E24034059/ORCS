@@ -9,30 +9,29 @@ using gradeprogram.Service;
 using gradeprogram.Service.Interface;
 using gradeprogram.Models;
 
-public partial class Exercise_MarkProgramQuestion : System.Web.UI.Page
+public partial class Exercise_CreateFolder : System.Web.UI.Page
 {
-    private ITaskCorrection TaskCorrectionService;
+    string assignmentPath=@"C:\Users\chiu\Desktop\Integrate_Program_comparing_to_Hints\gradeprogram\gradeprogram\HWfile";
     protected void Page_Load(object sender, EventArgs e)
     { 
-        string ProgramPath=Request.Form["ProgramPath"];
-        string cQID = Request.Form["cQID"];
-        string StuCouHWDe_ID = Request.Form["StuCouHWDe_ID"];
-        string questionNum = Request.Form["questionNum"];
-        
+        string cCourseName = Request.Form["cCourseName"];
+        string HW_Exam_Number = Request.Form["HW_Exam_Number"];
+        string QuestionNumber = Request.Form["QuestionNumber"];
         //call the program marking function implemented in gradeprogram project
-        string result = MarkProgram(ProgramPath,cQID,StuCouHWDe_ID,questionNum);
+        string result = createfolder(cCourseName, HW_Exam_Number, QuestionNumber);
         Response.Write(result);
         Response.End();
     }
 
 
-    //if StuCouHWDe_ID is "all", just mark all the programs in the folder.
+    //Create Folder to put programs
     [WebMethod]
-    public string MarkProgram(string ProgramPath,string cQID,string StuCouHWDe_ID,string questionNum)
+    public string createfolder(string cCourseName, string HW_Exam_Number,string QuestionNumber)
     {
         //call program marker
-        this.TaskCorrectionService = new TaskCorrection();
-        return TaskCorrectionService.CorrectTask( ProgramPath,cQID, StuCouHWDe_ID, questionNum);
+        HWPathHelper s = new HWPathHelper(assignmentPath+@"\"+cCourseName+@"\"+HW_Exam_Number+@"\"+QuestionNumber);
+        s.HWPathdir();
+        return "Finish create";
         /*
         string strUpdateSQL = "UPDATE RecordMultiFormItem SET Required='true' WHERE MFID='" + FormID + "'";
         CsDBConnection.InsertDataTable(strUpdateSQL);

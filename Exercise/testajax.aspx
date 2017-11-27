@@ -15,10 +15,23 @@
     </form>
 </body>
 <script>
+   /*  $.ajax(
+                             {
+                                 url: "http://140.116.177.49/ORCS/Exercise/MarkProgramQuestion.aspx",
+                                 data: "ProgramPath=C:\\Users\\chiu\\Desktop\\Integrate_Program_comparing_to_Hints\\gradeprogram\\gradeprogram\\HWfile\\資料查詢\\HW1&cQID=tea1_Q_20171123182738&StuCouHWDe_ID=all&questionNum=Q4",
+                                 type: "post",
+                                 cache: false,
+                                 async: false,
+                                 dataType:"text",
+                                 success: function (data) {
+                                     alert(data);
+                                 },
+                                 error:function(){alert('ajax failed')}
+                             });*/
     $.ajax(
                              {
-                                 url: "MarkProgramQuestion.aspx",
-                                 data: "ProgramPath=C:\\Users\\chiu\\Desktop\\Integrate_Program_comparing_to_Hints\\gradeprogram\\gradeprogram\\HWfile\\資料查詢\\HW1&cQID=tea1_Q_20171123182738&StuCouHWDe_ID=all&questionNum=Q4",
+                                 url: "http://140.116.177.49/ORCS/Exercise/CreateFolder.aspx",
+                                 data: "cCourseName=sss&HW_Exam_Number=HW1&QuestionNumber=Q4",
                                  type: "post",
                                  cache: false,
                                  async: false,
@@ -30,4 +43,5 @@
                              });
 
 </script>
+
 </html>
